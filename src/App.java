@@ -38,10 +38,7 @@ public class App extends JPanel{
     System.out.println("Filtered words:");
     for (String word : filterWord) {
         System.out.println(word);
-        
     }
-
-
     }
 
     public void paintComponent(Graphics g){
@@ -53,6 +50,4 @@ public class App extends JPanel{
         g.drawString("TOOL_TIP_TEXT_KEY", 50, 250);
 
     }
-
-
 }
