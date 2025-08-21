@@ -46,7 +46,7 @@ public class App extends JPanel{
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.setColor(Color.red);
+        g.setColor(Color.blue);
         g.fillRect(250, 50, 100, 100);
         g.setColor(Color.magenta);
         g.setFont(new Font("Serif", Font.BOLD, 20));
