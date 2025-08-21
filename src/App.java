@@ -50,6 +50,8 @@ public class App extends JPanel{
         g.setColor(Color.magenta);
         g.setFont(new Font("Serif", Font.BOLD, 20));
         g.drawString("Coolen Text", 50, 250);
+        
+        g.fillRect(10, 100, 105, 200);
 
     }
 }
