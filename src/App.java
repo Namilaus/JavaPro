@@ -39,15 +39,17 @@ public class App extends JPanel{
     for (String word : filterWord) {
         System.out.println(word);
     }
+
+
     }
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.setColor(Color.red);
+        g.setColor(Color.blue);
         g.fillRect(250, 50, 100, 100);
         g.setColor(Color.magenta);
         g.setFont(new Font("Serif", Font.BOLD, 20));
-        g.drawString("TOOL_TIP_TEXT_KEY", 50, 250);
+        g.drawString("Coolen Text", 50, 250);
 
     }
 }
