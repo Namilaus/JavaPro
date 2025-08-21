@@ -40,7 +40,7 @@ public class App extends JPanel{
         System.out.println(word);
         
     }
-
+// test
 
     }
 
