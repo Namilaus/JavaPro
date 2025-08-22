@@ -7,4 +7,10 @@ public class Test {
         return "Test []";
     }
     
+    public void test() {
+        //useless comment
+    }
+    
 }
+
+
