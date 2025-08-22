@@ -11,16 +11,21 @@ import java.util.Random;
 
 public class App extends JPanel{
     public static final int FPS = 100; // every 100 milliseconds refereshing 1 time also 60 time in a second
-    public final int SNAKELENGTH = 15;
     public final int SNAKEWIDTH = 10;
+    public final int FRUITWIDTH  = 20;
+    public final int FRUITHEIGHT = 20;
     
+    public int SNAKELENGTH = 15;
     private int dirX = 1, dirY = 0;
     private int x = 0, y = 0;
+    private int xFruit = 0, yFruit = 0;
+
     JFrame frame;
+    Random rand;
 
     public App(JFrame frame){
         this.frame = frame;
-        Random rand = new Random();
+        this.rand = new Random();
         // random spawn point
         x = rand.nextInt(100) + 1;
         y = rand.nextInt(100) + 1;
@@ -38,7 +43,7 @@ public class App extends JPanel{
     frame.setVisible(true);
     panel.requestFocus();
 
-
+    
     panel.addKeyListener(new KeyListener() {
        
         @Override
@@ -86,6 +91,11 @@ public class App extends JPanel{
         };
     });
 
+
+    //init the fruit
+    panel.generateFruitPos();    
+
+
     while (true) {
      try {
         Thread.sleep(FPS);
@@ -109,7 +119,7 @@ public class App extends JPanel{
     }
 
     public int[] getXandY(){
-        return new int[] {x, y};
+        return new int[] {this.x, this.y};
     }
     
     public void setXandY(int x,int y){
@@ -118,10 +128,13 @@ public class App extends JPanel{
     }
 
 
-    public void generateFruit(Graphics g){
-        g.setColor(Color.red);
-        g.fillRect(100, 100, 50, 50);
+    public void generateFruitPos(){
+        int xF = rand.nextInt(100) + 1, yF = rand.nextInt(100) + 1;
+        this.xFruit = xF;
+        this.yFruit = yF;
     }
+
+    
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
@@ -131,17 +144,29 @@ public class App extends JPanel{
         
         // rotate the snake
         if(this.dirX  == 1 || this.dirX == -1){
-        g.fillRect(xAndy[0], xAndy[1], SNAKELENGTH, SNAKEWIDTH);
+        g.fillRect(xAndy[0], xAndy[1], this.SNAKELENGTH, this.SNAKEWIDTH);
         }else{
-        g.fillRect(xAndy[0], xAndy[1], SNAKEWIDTH, SNAKELENGTH);
+        g.fillRect(xAndy[0], xAndy[1], this.SNAKEWIDTH, this.SNAKELENGTH);
         }
 
-
+        // the text on the window
         g.setColor(Color.magenta);
         g.setFont(new Font("Serif", Font.BOLD, 20));
         g.drawString("Simple Sneak Game", this.frame.getContentPane().getWidth()/2, 20);
 
-        generateFruit(g);
-        
+
+        // check if fruit is already eaten 60 - 65
+        boolean collision = (Math.abs(this.x - this.xFruit) < this.FRUITWIDTH-5) && (Math.abs(this.y - this.yFruit) < this.FRUITHEIGHT-5);
+        if(collision){
+        // draw the fruit with new cordinates
+        this.SNAKELENGTH +=10;
+        generateFruitPos();
+    }
+
+
+        // draw the fruit
+        g.setColor(Color.red);
+        g.fillOval(this.xFruit, this.yFruit, this.FRUITWIDTH, this.FRUITHEIGHT);
+
     }
 }
