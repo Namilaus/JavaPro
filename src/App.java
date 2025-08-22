@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -13,7 +9,7 @@ import java.awt.event.KeyListener;
 
 
 public class App extends JPanel{
-
+    private int dirX = 1, dirY = 0;
     private int x = 1, y = 1;
     JFrame frame;
     public App(JFrame frame){
@@ -22,20 +18,10 @@ public class App extends JPanel{
 
     public static void main(String[] args) {
 
-
-    List<String> words = new ArrayList<>();
-    words.add("Tree");
-    words.add("Hello");
-    words.add("World");
-    words.add("Race");
-    words.add("Game");
-    words.add("Numbers");
-    words.add("Ride");
-    System.out.println(Math.toDegrees(.7));
-    System.out.println("Hello, World!");
-    
     JFrame frame = new JFrame("Test");
     App panel = new App(frame);
+    
+
     
     
     frame.add(panel);
@@ -45,22 +31,23 @@ public class App extends JPanel{
     frame.setVisible(true);
     panel.requestFocus();
 
-    System.out.println(frame.getHeight());
-
-    List<String> filterWord = words.stream().filter(word -> word.equals("m")).map(word -> word.toUpperCase()).collect(Collectors.toList());
-    System.out.println("Filtered words:");
-    for (String word : filterWord) {
-        System.out.println(word);
-    }
     panel.addKeyListener(new KeyListener() {
         
         @Override
         public void keyPressed(KeyEvent e) {
             if(e.getKeyCode() == KeyEvent.VK_D){
-                System.out.println("d is pressed");
-                int[] xAndy = panel.getXandY();
 
+                int[] xAndy = panel.getXandY();
+                panel.setDirXandY(1, 0);
                 panel.setXandY(xAndy[0]+1,xAndy[1]);
+                panel.repaint();
+
+            }else if(e.getKeyCode() == KeyEvent.VK_S){
+                int[] xAndy = panel.getXandY();
+                panel.setDirXandY(0, 1);                
+
+
+                panel.setXandY(xAndy[0], xAndy[1]+1);
                 panel.repaint();
             }
         }
@@ -68,7 +55,7 @@ public class App extends JPanel{
         @Override
         public void keyReleased(KeyEvent e) {
             // TODO Auto-generated method stub
-            System.out.println("Somekey releases");
+            System.out.println("Somekey releases: "+ e.getKeyChar());
         }
 
         @Override
@@ -80,10 +67,28 @@ public class App extends JPanel{
 
         };
     });
-    
 
+    while (true) {
+     try {
+        Thread.sleep(100);
+        int[] currXandY = panel.getXandY();
+        int[] currDirXandY = panel.getDirXandY();
+        panel.setXandY(currXandY[0]+currDirXandY[0], currXandY[1]+currDirXandY[1]);
+        panel.repaint();
+     } catch (InterruptedException e) {
+        e.printStackTrace();
+     }
+    }
+    }
+    
+    public int[] getDirXandY(){
+        return new int[] {this.dirX, dirY};
     }
 
+    public void setDirXandY(int x, int y){
+        this.dirX = x;
+        this.dirY = y;
+    }
 
     public int[] getXandY(){
         return new int[] {x, y};
@@ -93,19 +98,15 @@ public class App extends JPanel{
        this.y = y;
     }
 
-
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.setColor(Color.blue);
-
         int[] xAndy = getXandY();
-
         
-        g.fillRect(xAndy[0], xAndy[1], 5+xAndy[0], 5);
+        g.setColor(Color.blue);
+        g.fillRect(xAndy[0], xAndy[1], 10, 10);
         g.setColor(Color.magenta);
-        System.out.println("Cannot pain");
         g.setFont(new Font("Serif", Font.BOLD, 20));
-        g.drawString("Coolen Text", 50, 250);
+        g.drawString("Simple Sneak Game", this.frame.getContentPane().getWidth()/2, 20);
         
     }
 }
