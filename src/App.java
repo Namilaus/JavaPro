@@ -6,14 +6,20 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 
 
 public class App extends JPanel{
+    public static final int FPS = 100;
+    
     private int dirX = 1, dirY = 0;
-    private int x = 1, y = 1;
+    private int x = 0, y = 0;
     JFrame frame;
     public App(JFrame frame){
         this.frame = frame;
+        Random rand = new Random();
+        x = rand.nextInt(100) + 1;
+        y = rand.nextInt(100) + 1;
     }
 
     public static void main(String[] args) {
@@ -48,6 +54,18 @@ public class App extends JPanel{
                 panel.setXandY(xAndy[0], xAndy[1]+1);
                 panel.repaint();
                 break;
+            case KeyEvent.VK_W:
+                xAndy = panel.getXandY();
+                panel.setDirXandY(0, -1);                
+                panel.setXandY(xAndy[0], xAndy[1]-1);
+                panel.repaint();
+                break;
+            case KeyEvent.VK_A:
+                xAndy = panel.getXandY();
+                panel.setDirXandY(-1, 0);                
+                panel.setXandY(xAndy[0]-1, xAndy[1]);
+                panel.repaint();
+                break;
             default:
                 break;
            }
@@ -71,7 +89,7 @@ public class App extends JPanel{
 
     while (true) {
      try {
-        Thread.sleep(100);
+        Thread.sleep(FPS);
         int[] currXandY = panel.getXandY();
         int[] currDirXandY = panel.getDirXandY();
         panel.setXandY(currXandY[0]+currDirXandY[0], currXandY[1]+currDirXandY[1]);
