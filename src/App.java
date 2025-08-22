@@ -32,24 +32,25 @@ public class App extends JPanel{
     panel.requestFocus();
 
     panel.addKeyListener(new KeyListener() {
-        
+       
         @Override
         public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode() == KeyEvent.VK_D){
-
+           switch (e.getKeyCode()) {
+            case KeyEvent.VK_D:
                 int[] xAndy = panel.getXandY();
                 panel.setDirXandY(1, 0);
                 panel.setXandY(xAndy[0]+1,xAndy[1]);
                 panel.repaint();
-
-            }else if(e.getKeyCode() == KeyEvent.VK_S){
-                int[] xAndy = panel.getXandY();
+                break;
+            case KeyEvent.VK_S:
+                xAndy = panel.getXandY();
                 panel.setDirXandY(0, 1);                
-
-
                 panel.setXandY(xAndy[0], xAndy[1]+1);
                 panel.repaint();
-            }
+                break;
+            default:
+                break;
+           }
         }
 
         @Override
