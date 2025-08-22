@@ -21,6 +21,7 @@ public class App extends JPanel{
     public App(JFrame frame){
         this.frame = frame;
         Random rand = new Random();
+        // random spawn point
         x = rand.nextInt(100) + 1;
         y = rand.nextInt(100) + 1;
     }
@@ -74,14 +75,13 @@ public class App extends JPanel{
 
         @Override
         public void keyReleased(KeyEvent e) {
-            System.out.println("Somekey releases: "+ e.getKeyChar());
+            System.out.println("Some key releases: "+ e.getKeyChar());
         }
 
         @Override
         public void keyTyped(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_D){
-                System.out.println("d is typed");
-            }
+            //TODO
+            
 
         };
     });
@@ -111,10 +111,12 @@ public class App extends JPanel{
     public int[] getXandY(){
         return new int[] {x, y};
     }
+    
     public void setXandY(int x,int y){
        this.x =  x;
        this.y = y;
     }
+
 
     public void generateFruit(Graphics g){
         g.setColor(Color.red);
