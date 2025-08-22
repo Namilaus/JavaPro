@@ -10,11 +10,14 @@ import java.util.Random;
 
 
 public class App extends JPanel{
-    public static final int FPS = 100;
+    public static final int FPS = 100; // every 100 milliseconds refereshing 1 time also 60 time in a second
+    public final int SNAKELENGTH = 15;
+    public final int SNAKEWIDTH = 10;
     
     private int dirX = 1, dirY = 0;
     private int x = 0, y = 0;
     JFrame frame;
+
     public App(JFrame frame){
         this.frame = frame;
         Random rand = new Random();
@@ -24,18 +27,16 @@ public class App extends JPanel{
 
     public static void main(String[] args) {
 
+    // init window
     JFrame frame = new JFrame("Test");
     App panel = new App(frame);
-    
-
-    
-    
     frame.add(panel);
     frame.setSize(400, 400);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     panel.setFocusable(true);
     frame.setVisible(true);
     panel.requestFocus();
+
 
     panel.addKeyListener(new KeyListener() {
        
@@ -73,13 +74,11 @@ public class App extends JPanel{
 
         @Override
         public void keyReleased(KeyEvent e) {
-            // TODO Auto-generated method stub
             System.out.println("Somekey releases: "+ e.getKeyChar());
         }
 
         @Override
         public void keyTyped(KeyEvent e) {
-            // TODO Auto-generated method stub
                 if(e.getKeyCode() == KeyEvent.VK_D){
                 System.out.println("d is typed");
             }
@@ -117,15 +116,30 @@ public class App extends JPanel{
        this.y = y;
     }
 
+    public void generateFruit(Graphics g){
+        g.setColor(Color.red);
+        g.fillRect(100, 100, 50, 50);
+    }
+
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         int[] xAndy = getXandY();
         
         g.setColor(Color.blue);
-        g.fillRect(xAndy[0], xAndy[1], 10, 10);
+        
+        // rotate the snake
+        if(this.dirX  == 1 || this.dirX == -1){
+        g.fillRect(xAndy[0], xAndy[1], SNAKELENGTH, SNAKEWIDTH);
+        }else{
+        g.fillRect(xAndy[0], xAndy[1], SNAKEWIDTH, SNAKELENGTH);
+        }
+
+
         g.setColor(Color.magenta);
         g.setFont(new Font("Serif", Font.BOLD, 20));
         g.drawString("Simple Sneak Game", this.frame.getContentPane().getWidth()/2, 20);
+
+        generateFruit(g);
         
     }
 }
